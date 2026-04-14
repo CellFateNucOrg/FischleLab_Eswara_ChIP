@@ -22,4 +22,10 @@ if(all(samples==sapply(strsplit(sampleSheet$fastq_2, "/"),"[[",8))){
   sampleSheet$control_replicate[sampleSheet$antibody=="H3K9me"]<- sampleSheet$replicate[sampleSheet$antibody=="H3K9me"]
 }
 head(sampleSheet)
+
 write.csv(sampleSheet,paste0(workDir,"/sampleSheet.csv"), row.names=F, quote=F)
+
+# convert blacklist
+bl<-import(paste0(workDir,"/ce11-blacklist.v2.bed"), format="BED")
+seqlevels(bl)<-gsub("chr","",seqlevels(bl))
+export(bl, paste0(workDir,"/WBcel235-blacklist.v2.bed"))

@@ -9,7 +9,7 @@ source $CONDA_ACTIVATE deeptools
 workDir=/mnt/external.data/MeisterLab/FischleLab_KarthikEswara/ChIP
 samplesheet=$workDir/sampleSheet.csv
 #sizeFactorFile=$workDir/$runName/other/deseq2/HPL2GFP_lin61_vs_N2.deseq2.sizefactors.tsv
-blackListFile=$workDir/ce11-blacklist.v2.bed
+blackListFile=$workDir/WBcel235-blacklist.v2.bed
 outDirAvr=$workDir/bigwigAvrSeparate
 outDirSubtract=$workDir/bigwigSubtract
 outDirLog2fc=$workDir/bigwigLog2fc
