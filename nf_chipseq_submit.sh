@@ -15,4 +15,4 @@ CONFIG_FILE=/mnt/external.data/MeisterLab/nf-core/unibe_izb.config
 
 #nextflow run nf-core/chipseq -profile singularity --input sampleSheet.csv --outdir $WORK_DIR -c $CONFIG_FILE --genome WBcel235 --read_length 150 --min_reps_consensus 3 --macs_fdr 0.05 -r 2.1.0
 
-nextflow run nf-core/chipseq -profile singularity --input sampleSheet.csv --outdir $WORK_DIR -c $CONFIG_FILE --genome WBcel235 --read_length 150 --min_reps_consensus 3 --skip_fastqc --skip_picard_metrics --skip_preseq --skip_plot_profile --skip_plot_fingerprint --skip_spp --skip_deseq2_qc --skip_igv --macs_fdr 0.05 -r 2.1.0
+nextflow run nf-core/chipseq -profile singularity --input sampleSheet.csv --outdir $WORK_DIR -c $CONFIG_FILE --genome WBcel235 --read_length 150 --min_reps_consensus 3 --skip_fastqc --skip_picard_metrics --skip_preseq --skip_plot_profile --skip_plot_fingerprint --skip_spp --skip_igv --macs_fdr 0.05 -r 2.1.0 

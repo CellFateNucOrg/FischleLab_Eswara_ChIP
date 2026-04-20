@@ -6,7 +6,7 @@ fqlist<-read.delim(paste0(workDir,"/fastqList.txt"),header=F)
 
 fqlist$sample<-sapply(strsplit(fqlist$V1, "/"),"[[",8)
 
-sampleSheet<-data.frame(group="",
+sampleSheet<-data.frame(sample="",
                         fastq_1=fqlist$V1[seq(1,nrow(fqlist),2)],
                         fastq_2=fqlist$V1[seq(2,nrow(fqlist),2)],
                         replicate="",antibody="",
@@ -15,13 +15,20 @@ sampleSheet<-data.frame(group="",
 samples<-sapply(strsplit(sampleSheet$fastq_1, "/"),"[[",8)
 
 if(all(samples==sapply(strsplit(sampleSheet$fastq_2, "/"),"[[",8))){
+  sampleSheet$sample<-gsub("_rep[0-9]+","",samples)
   sampleSheet$replicate<-gsub("rep","",sapply(strsplit(samples, "_"),"[[",3))
-  sampleSheet$group<-gsub("_rep[0-9]+","",samples)
-  sampleSheet$antibody[grepl("_IP",sampleSheet$group)]<-"H3K9me"
-  sampleSheet$control[sampleSheet$antibody=="H3K9me"]<-gsub("_IP","_input",sampleSheet$group)
-  sampleSheet$control_replicate[sampleSheet$antibody=="H3K9me"]<- sampleSheet$replicate[sampleSheet$antibody=="H3K9me"]
+  # antibody
+  sampleSheet$antibody[grepl("_IP",sampleSheet$sample)]<-"H3K9me2"
+  sampleSheet$antibody[grepl("Trip_IP",sampleSheet$sample)]<-"H3K9me_null"
+  sampleSheet$antibody[grepl("IgG_IP",sampleSheet$sample)]<-"IgG"
+  # control samples
+  sampleSheet$control[sampleSheet$antibody!=""]<-gsub("_IP","_input",sampleSheet$sample[sampleSheet$antibody!=""])
+  sampleSheet$control[grepl("IgG_IP",sampleSheet$sample)]<-"N2_input"
+  # control replicate number
+  sampleSheet$control_replicate[sampleSheet$antibody!=""]<- sampleSheet$replicate[sampleSheet$antibody!=""]
 }
 head(sampleSheet)
+
 
 write.csv(sampleSheet,paste0(workDir,"/sampleSheet.csv"), row.names=F, quote=F)
 
