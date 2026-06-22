@@ -1,10 +1,10 @@
 library(dplyr)
 
-workDir="/Volumes/external.data/MeisterLab/FischleLab_KarthikEswara/ChIP"
+workDir="/Volumes/meister.data/jsemple/ChIPseq_H3K9me2_20260405"
 
 fqlist<-read.delim(paste0(workDir,"/fastqList.txt"),header=F)
 
-fqlist$sample<-sapply(strsplit(fqlist$V1, "/"),"[[",8)
+fqlist$sample<-sapply(strsplit(fqlist$V1, "/"),"[[",7)
 
 sampleSheet<-data.frame(sample="",
                         fastq_1=fqlist$V1[seq(1,nrow(fqlist),2)],
@@ -12,9 +12,9 @@ sampleSheet<-data.frame(sample="",
                         replicate="",antibody="",
                         control="",control_replicate="")
 
-samples<-sapply(strsplit(sampleSheet$fastq_1, "/"),"[[",8)
+samples<-sapply(strsplit(sampleSheet$fastq_1, "/"),"[[",7)
 
-if(all(samples==sapply(strsplit(sampleSheet$fastq_2, "/"),"[[",8))){
+if(all(samples==sapply(strsplit(sampleSheet$fastq_2, "/"),"[[",7))){
   sampleSheet$sample<-gsub("_rep[0-9]+","",samples)
   sampleSheet$replicate<-gsub("rep","",sapply(strsplit(samples, "_"),"[[",3))
   # antibody
