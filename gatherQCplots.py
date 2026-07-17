@@ -7,11 +7,12 @@ import pandas as pd
 from pdf2image import convert_from_path
 
 # Set the root directory
-root_dir = '/mnt/external.data/MeisterLab/FischleLab_KarthikEswara/ChIP'
+#root_dir = '/mnt/external.data/MeisterLab/FischleLab_KarthikEswara/ChIP'
+root_dir = '/mnt/meister.data/jsemple/ChIPseq_H3K9me2_20260405'
 
 #samples = pd.read_csv(os.path.join(root_dir, 'sampleSheet.csv'))
 
-out_dir="gathered_qc_plots"
+out_dir=os.path.join(root_dir,'gathered_qc_plots')
 os.makedirs(out_dir,exist_ok=True)
 
 ########

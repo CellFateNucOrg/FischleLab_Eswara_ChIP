@@ -1,4 +1,5 @@
 library(dplyr)
+library(rtracklayer)
 
 workDir="/Volumes/meister.data/jsemple/ChIPseq_H3K9me2_20260405"
 
@@ -32,7 +33,13 @@ head(sampleSheet)
 
 write.csv(sampleSheet,paste0(workDir,"/sampleSheet.csv"), row.names=F, quote=F)
 
+
 # convert blacklist
+# get blacklist from:
+# "https://github.com/Boyle-Lab/Blacklist/blob/master/lists/ce11-blacklist.v2.bed.gz"
+blURL<-"https://github.com/Boyle-Lab/Blacklist/raw/refs/heads/master/lists/ce11-blacklist.v2.bed.gz"
+download.file(blURL,destfile=basename(blURL))
+
 bl<-import(paste0(workDir,"/ce11-blacklist.v2.bed"), format="BED")
 seqlevels(bl)<-gsub("chr","",seqlevels(bl))
 export(bl, paste0(workDir,"/WBcel235-blacklist.v2.bed"))
