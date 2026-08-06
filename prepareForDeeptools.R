@@ -31,7 +31,7 @@ write.table(df,paste0(workDir,"/exploreChIP/bwListFile_avrlfc.csv"),quote=F,row.
             col.names=F,sep=",")
 
 
-## N2 consensus peaks
+## consensus peaks
 consensusDir=paste0(workDir,"/bwa/merged_library/macs3/broad_peak/consensus/H3K9me2")
 outDir<-paste0(workDir,"/exploreChIP")
 dir.create(outDir, showWarnings = FALSE)
