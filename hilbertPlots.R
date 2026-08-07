@@ -7,27 +7,34 @@ library(ComplexHeatmap)
 library(rtracklayer)
 library(circlize)
 
-n2<-import("/Volumes/meister.data/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405/bigwigLog2fc/N2_IPlog2fcInput_avr.bigwig")
-n2<-convertToCe11(n2)
-
-EM88<-import("/Volumes/meister.data/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405/bigwigLog2fc/EM88_IPlog2fcInput_avr.bigwig")
-EM88<-convertToCe11(EM88)
-
-EM90<-import("/Volumes/meister.data/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405/bigwigLog2fc/EM90_IPlog2fcInput_avr.bigwig")
-EM90<-convertToCe11(EM90)
-
-EM91<-import("/Volumes/meister.data/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405/bigwigLog2fc/EM91_IPlog2fcInput_avr.bigwig")
-EM91<-convertToCe11(EM91)
-
-EM92<-import("/Volumes/meister.data/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405/bigwigLog2fc/EM92_IPlog2fcInput_avr.bigwig")
-EM92<-convertToCe11(EM92)
-
 convertToCe11<-function(gr){
   seqlevelsStyle(gr)<-"UCSC"
   seqlevels(gr)<-seqlevels(Celegans)
   sort(gr)
   return(gr)
 }
+
+serverPath="/Volumes/meister.data"
+#serverPath="Z:/MeisterLab"
+
+workDir=paste0(serverPath,"/FischleLab_KarthikEswara/ChIPseq_H3K9me2_20260405")
+
+n2<-import(paste0(workDir,"/bigwigLog2fc/N2_IPlog2fcInput_avr.bigwig"))
+n2<-convertToCe11(n2)
+
+EM88<-import(paste0(workDir,"/bigwigLog2fc/EM88_IPlog2fcInput_avr.bigwig"))
+EM88<-convertToCe11(EM88)
+
+EM90<-import(paste0(workDir,"/bigwigLog2fc/EM90_IPlog2fcInput_avr.bigwig"))
+EM90<-convertToCe11(EM90)
+
+EM91<-import(paste0(workDir,"/bigwigLog2fc/EM91_IPlog2fcInput_avr.bigwig"))
+EM91<-convertToCe11(EM91)
+
+EM92<-import(paste0(workDir,"/bigwigLog2fc/EM92_IPlog2fcInput_avr.bigwig"))
+EM92<-convertToCe11(EM92)
+
+
 
 
 
@@ -45,14 +52,18 @@ drawHilbertCurve<-function(gr,chr,title=NULL,legendTitle=NULL, col_fun=NULL,lgd=
 
 
 
-col_fun = colorRamp2(quantile(n2$score, c(0.1, 0.5, 0.9)), c("blue", "#FFFFCC", "red"))
+# col_fun = colorRamp2(quantile(n2$score, c(0.1, 0.5, 0.9)), c("blue", "#FFFFCC", "red"))
+# lgd = Legend(col_fun = col_fun, title = "H3K9me2",
+#              at = quantile(n2$score, c(0, 0.5, 1)),
+#              labels = round(quantile(n2$score, c(0,  0.5,  1)),2))
+
+col_fun = colorRamp2(c(-1,0,1), c("blue", "#FFFFCC", "red"))
 lgd = Legend(col_fun = col_fun, title = "H3K9me2",
-             at = quantile(n2$score, c(0, 0.5, 1)),
-             labels = round(quantile(n2$score, c(0,  0.5,  1)),2))
+             at = c(-1,0,1),
+             labels = c(-1,0,1))
 
 
-
-pdf("hilbertCurves_chrII_sameScale.pdf",width=8,height=11)
+pdf(paste0(workDir,"/hilbertCurves_chrII_sameScale_H3K9me2.pdf"),width=8,height=11)
 drawHilbertCurve(n2,chr="chrII",title="N2",legendTitle="H3K9me2",col_fun,lgd)
 drawHilbertCurve(EM88,chr="chrII",title="EM88",legendTitle="H3K9me2",col_fun,lgd)
 drawHilbertCurve(EM90,chr="chrII",title="EM90",legendTitle="H3K9me2",col_fun,lgd)
